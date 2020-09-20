@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://plugin.powerschool.pearson.com"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation='http://plugin.powerschool.pearson.com plugin.xsd'
+  name="Custom Plugin"
+  version="1.0"
+  description="PowerSchool plugin developed by Marcos Alcozer">
+
+  <oauth></oauth>
+
+  <access_request>
+
+    <field table="SCHOOLS" field="NAME" access="ViewOnly" />
+    <field table="SCHOOLS" field="SCHOOL_NUMBER" access="ViewOnly" />
+
+    <field table="ATTENDANCE" field="SCHOOLID" access="ViewOnly" />
+    <field table="ATTENDANCE" field="ATT_DATE" access="ViewOnly" />
+    <field table="ATTENDANCE" field="YEARID" access="ViewOnly" />
+    <field table="ATTENDANCE" field="STUDENTID" access="ViewOnly" />
+    <field table="ATTENDANCE" field="ATT_MODE_CODE" access="ViewOnly" />
+    <field table="ATTENDANCE" field="CCID" access="ViewOnly" />
+    <field table="ATTENDANCE" field="ATTENDANCE_CODEID" access="ViewOnly" />
+    
+    <field table="ATTENDANCE_CODE" field="ATT_CODE" access="ViewOnly" />
+    <field table="ATTENDANCE_CODE" field="DESCRIPTION" access="ViewOnly" />
+    <field table="ATTENDANCE_CODE" field="ID" access="ViewOnly" />
+    <field table="ATTENDANCE_CODE" field="YEARID" access="ViewOnly" />
+    <field table="ATTENDANCE_CODE" field="SCHOOLID" access="ViewOnly" />
+    
+    <field table="STUDENTS" field="STUDENT_NUMBER" access="ViewOnly" />
+    <field table="STUDENTS" field="LAST_NAME" access="ViewOnly" />
+    <field table="STUDENTS" field="FIRST_NAME" access="ViewOnly" />
+    <field table="STUDENTS" field="GRADE_LEVEL" access="ViewOnly" />
+    <field table="STUDENTS" field="ID" access="ViewOnly" />
+    
+    <field table="ATTENDANCE_CONVERSION" field="YEAR_ID" access="ViewOnly" />
+    <field table="ATTENDANCE_CONVERSION" field="SCHOOLID" access="ViewOnly" />
+    <field table="ATTENDANCE_CONVERSION" field="ID" access="ViewOnly" />
+    
+    <field table="ATTENDANCE_CONVERSION_ITEMS" field="ATTENDANCE_VALUE" access="ViewOnly" />
+    <field table="ATTENDANCE_CONVERSION_ITEMS" field="ATTENDANCE_CONVERSION_ID" access="ViewOnly" />
+    <field table="ATTENDANCE_CONVERSION_ITEMS" field="INPUT_VALUE" access="ViewOnly" />
+    
+    <field table="CC" field="ID" access="ViewOnly" />
+    <field table="CC" field="SCHOOLID" access="ViewOnly" />
+    <field table="CC" field="COURSE_NUMBER" access="ViewOnly" />
+    <field table="CC" field="SECTIONID" access="ViewOnly" />
+    <field table="CC" field="SECTION_NUMBER" access="ViewOnly" />
+    
+    <field table="SECTIONS" field="ID" access="ViewOnly" />
+    <field table="SECTIONS" field="EXTERNAL_EXPRESSION" access="ViewOnly" />
+    
+    <field table="COURSES" field="COURSE_NUMBER" access="ViewOnly" />
+    <field table="COURSES" field="COURSE_NAME" access="ViewOnly" />
+
+  </access_request>
+
+  <publisher name="Marcos Alcozer">
+    <contact email="marcos@alcozer.dev" />
+  </publisher>
+</plugin>

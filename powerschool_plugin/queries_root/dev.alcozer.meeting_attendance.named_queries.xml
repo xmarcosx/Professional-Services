@@ -1,0 +1,68 @@
+<queries>
+
+	<query name="dev.alcozer.meeting_attendance.dataset" flattened="true">
+	<description>Meeting attendance by student by date</description>
+	<columns>
+		<column column="ATTENDANCE.SCHOOLID">school_id</column>
+		<column column="SCHOOLS.NAME">school_name</column>
+		<column column="STUDENTS.STUDENT_NUMBER">student_unique_id</column>
+		<column column="STUDENTS.LAST_NAME">last_surname</column>
+		<column column="STUDENTS.FIRST_NAME">first_name</column>
+		<column column="STUDENTS.GRADE_LEVEL">grade_level</column>
+		<column column="ATTENDANCE.ATT_DATE">event_date</column>
+		<column column="CC.COURSE_NUMBER">section_identifier</column>
+		<column column="SECTIONS.EXTERNAL_EXPRESSION">class_period_name</column>
+		<column column="CC.COURSE_NUMBER">course_number</column>
+		<column column="COURSES.COURSE_NAME">course_name</column>
+		<column column="ATTENDANCE_CODE.ATT_CODE">attendance_code</column>
+		<column column="ATTENDANCE_CODE.DESCRIPTION">attendance_description</column>
+		<column column="ATTENDANCE_CONVERSION_ITEMS.ATTENDANCE_VALUE">event_duration</column>
+	</columns>
+	<sql>
+		<![CDATA[
+			SELECT
+				ATTENDANCE.SCHOOLID AS "school_id"
+				, SCHOOLS.NAME AS "school_name"
+				, STUDENTS.STUDENT_NUMBER AS "student_unique_id"
+				, STUDENTS.LAST_NAME AS "last_surname"
+				, STUDENTS.FIRST_NAME AS "first_name"
+				, STUDENTS.GRADE_LEVEL AS "grade_level"
+				, TO_CHAR(ATTENDANCE.ATT_DATE, 'YYYY-MM-DD') AS "event_date"
+				, CONCAT(CONCAT(CC.COURSE_NUMBER, '.'), CC.SECTION_NUMBER) AS "section_identifier"
+				, SECTIONS.EXTERNAL_EXPRESSION AS "class_period_name"
+				, CC.COURSE_NUMBER AS "course_number"
+				, COURSES.COURSE_NAME AS "course_name"
+				, ATTENDANCE_CODE.ATT_CODE AS "attendance_code"
+				, ATTENDANCE_CODE.DESCRIPTION AS "attendance_description"
+				, 1 - ATTENDANCE_CONVERSION_ITEMS.ATTENDANCE_VALUE AS "event_duration"
+			FROM ATTENDANCE
+			LEFT JOIN ATTENDANCE_CODE ON
+				ATTENDANCE_CODE.ID = ATTENDANCE.ATTENDANCE_CODEID
+				AND ATTENDANCE_CODE.YEARID = ATTENDANCE.YEARID
+				AND ATTENDANCE_CODE.SCHOOLID = ATTENDANCE.SCHOOLID
+			LEFT JOIN ATTENDANCE_CONVERSION ON
+				ATTENDANCE_CONVERSION.YEAR_ID = ATTENDANCE.YEARID
+				AND ATTENDANCE_CONVERSION.SCHOOLID = ATTENDANCE.SCHOOLID
+			LEFT JOIN ATTENDANCE_CONVERSION_ITEMS ON
+				ATTENDANCE_CONVERSION_ITEMS.ATTENDANCE_CONVERSION_ID = ATTENDANCE_CONVERSION.ID
+				AND ATTENDANCE_CONVERSION_ITEMS.INPUT_VALUE = ATTENDANCE_CODE.ID
+			LEFT JOIN STUDENTS ON STUDENTS.ID = ATTENDANCE.STUDENTID
+			LEFT JOIN CC ON
+				CC.ID = ATTENDANCE.CCID
+				AND CC.SCHOOLID = ATTENDANCE.SCHOOLID
+			LEFT JOIN SECTIONS ON SECTIONS.ID = ABS(CC.SECTIONID) -- using ABS is necessary for students who have unenrolled
+			LEFT JOIN COURSES ON COURSES.COURSE_NUMBER = CC.COURSE_NUMBER
+			LEFT JOIN SCHOOLS ON SCHOOLS.SCHOOL_NUMBER = CC.SCHOOLID
+			WHERE
+				AND ATTENDANCE.YEARID = 30
+				AND ATTENDANCE.ATT_MODE_CODE = 'ATT_ModeMeeting'
+				AND ATTENDANCE_CODE.ATT_CODE IS NOT NULL
+				AND STUDENTS.STUDENT_NUMBER IS NOT NULL
+			ORDER BY
+				STUDENTS.STUDENT_NUMBER
+				, ATTENDANCE.ATT_DATE
+		]]>
+	</sql>
+	</query>
+
+</queries>
