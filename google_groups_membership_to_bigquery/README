@@ -1,0 +1,5 @@
+# Google Groups to BigQuery utilizing Google Apps Script
+
+Documention coming soon.
+
+This requires enableding the BigQuery and AdminDirectory advanced services in Apps Script. It also requires a BigQuery table to already be present with 3 columns of type STRING: GroupName, GroupEmail, and MemberEmail.
